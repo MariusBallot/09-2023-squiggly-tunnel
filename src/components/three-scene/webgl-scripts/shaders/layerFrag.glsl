@@ -1,3 +1,4 @@
+#pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 uniform sampler2D u_metalMatCap;
 uniform float u_index;
 uniform float u_layersCount;
@@ -7,7 +8,14 @@ uniform vec3 u_layerColor;
 varying vec2 vN;
 varying vec2 vUv;
 varying vec3 vPosition;
-#pragma glslify: snoise3 = require(glsl-noise/simplex/3d) 
+
+vec3 hsl2rgb( in vec3 c )
+{
+    vec3 rgb = clamp( abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
+
+    return c.z + c.y * (rgb-0.5)*(1.0-abs(2.0*c.z-1.0));
+}
+
 
 
 float cutOutSizeF(float index){
@@ -49,6 +57,6 @@ void main() {
         shadow = vec3(prevCookieCutter*0.1);
     }
 
-    vec4 outCol = vec4(u_layerColor-shadow - AO,cookieCutter);
+    vec4 outCol = vec4(hsl2rgb(vec3(u_index/30.-u_time*0.001,1.,.5))-shadow - AO,cookieCutter);
     gl_FragColor =outCol;
 }

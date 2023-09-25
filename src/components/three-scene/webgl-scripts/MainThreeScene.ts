@@ -1,8 +1,11 @@
 import * as THREE from "three";
-import { OrbitControls } from 'three-orbitcontrols-ts';
+// import { OrbitControls } from 'three-orbitcontrols-ts';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import RAF from '../../../utils/RAF';
-import SquigglyTunnel from "./SquigglyTunnel"
 import CamParallax from "./CamParallax"
+
+import SquigglyTunnel from "./SquigglyTunnel"
+import TunnelFBO from "./TunnelFBO"
 
 class MainThreeScene {
     private camera: THREE.OrthographicCamera | undefined;
@@ -31,7 +34,7 @@ class MainThreeScene {
 
         // CAMERA AND ORBIT CONTROLLER
         const aspectRatio = window.innerWidth / window.innerHeight;
-        const cameraWidth = 10;
+        const cameraWidth = 18;
         const cameraHeight = cameraWidth / aspectRatio;
 
         this.camera = new THREE.OrthographicCamera(
@@ -43,17 +46,20 @@ class MainThreeScene {
             1000                // Far
         );
         if (this.camera) {
-            this.camera.position.set(0, 0, 10);
+            this.camera.position.set(0, 0, 20);
+            this.camera.layers.set(1)
             this.controls = new OrbitControls(this.camera, this.renderer.domElement);
             if (this.controls) {
-                this.controls.enabled = false; // You can adjust this based on your config.
+                this.controls.enabled = true; // You can adjust this based on your config.
                 this.controls.maxDistance = 1500;
                 this.controls.minDistance = 0;
             }
             CamParallax.init(this.camera)
+            CamParallax.active = false
         }
 
         SquigglyTunnel.init(this.scene)
+        TunnelFBO.init(this.scene)
 
         // RENDER LOOP AND WINDOW SIZE UPDATER SETUP
         window.addEventListener("resize", () => this.resizeCanvas());
@@ -64,7 +70,13 @@ class MainThreeScene {
         SquigglyTunnel.update()
 
         if (this.renderer && this.scene && this.camera) {
+            this.camera.layers.set(1)
+            this.renderer.setRenderTarget(TunnelFBO.frameTexture)
             this.renderer.render(this.scene, this.camera);
+            this.camera.layers.set(0)
+            this.renderer.setRenderTarget(null)
+            this.renderer.render(this.scene, this.camera);
+
         }
 
         CamParallax.update()
@@ -75,7 +87,7 @@ class MainThreeScene {
             this.renderer.setSize(window.innerWidth, window.innerHeight);
             
             const aspectRatio = window.innerWidth / window.innerHeight;
-            const cameraWidth = 10;
+            const cameraWidth = 18;
             const cameraHeight = cameraWidth / aspectRatio;
             // Update camera and renderer size
             this.camera.left = -cameraWidth / 2;
@@ -88,6 +100,8 @@ class MainThreeScene {
 
             this.camera.updateProjectionMatrix();
         }
+
+        TunnelFBO.onResize()
     }
 
     private bind() {

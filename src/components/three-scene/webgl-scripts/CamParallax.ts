@@ -1,5 +1,5 @@
 class CamParallax {
-    private active: boolean;
+    public active: boolean;
     private mousePos: { x: number; y: number };
     private params: {
         intensity: number;
@@ -21,7 +21,7 @@ class CamParallax {
 
     public init(camera: any) { // Replace 'any' with your actual camera type
         this.camera = camera;
-        this.initZ = this.camera.position.z;
+        // this.initZ = this.camera.position.z;
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
     }
 
@@ -38,7 +38,7 @@ class CamParallax {
             return;
         this.camera.position.x += (this.mousePos.x - this.camera.position.x) * this.params.ease;
         this.camera.position.y += (this.mousePos.y - this.camera.position.y) * this.params.ease;
-        this.camera.position.z += (this.initZ - this.camera.position.z) * this.params.ease;
+        // this.camera.position.z += (this.initZ - this.camera.position.z) * this.params.ease;
         this.camera.lookAt(0, 0, 0);
     }
 

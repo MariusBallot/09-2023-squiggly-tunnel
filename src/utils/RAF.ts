@@ -4,7 +4,7 @@ class RAF {
     constructor() {
         this.bind();
         this.callbacks = [];
-        this.render();
+        this.render()
     }
 
     subscribe(name: string, callback: () => void) {
@@ -23,7 +23,9 @@ class RAF {
     }
 
     render() {
-        window.requestAnimationFrame(this.render);
+        if (window !== undefined) {
+            window.requestAnimationFrame(this.render);
+        }
         this.callbacks.forEach((item) => {
             item.callback();
         });
