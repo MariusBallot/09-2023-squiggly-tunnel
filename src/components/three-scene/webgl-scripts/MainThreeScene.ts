@@ -69,7 +69,7 @@ class MainThreeScene {
     update() {
         SquigglyTunnel.update()
 
-        if (this.renderer && this.scene && this.camera) {
+        if (this.renderer && this.scene && this.camera && TunnelFBO.frameTexture) {
             this.camera.layers.set(1)
             this.renderer.setRenderTarget(TunnelFBO.frameTexture)
             this.renderer.render(this.scene, this.camera);
