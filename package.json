@@ -1,0 +1,29 @@
+{
+  "name": "next-three-ts-starter",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/node": "20.6.3",
+    "@types/react": "18.2.22",
+    "@types/react-dom": "18.2.7",
+    "glsl-noise": "^0.0.0",
+    "next": "13.5.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "three": "^0.156.1",
+    "three-orbitcontrols-ts": "^0.1.2",
+    "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/three": "^0.156.0",
+    "glslify": "^7.1.1",
+    "glslify-loader": "^2.0.0",
+    "raw-loader": "^4.0.2"
+  }
+}

@@ -1,0 +1,7 @@
+.three_scene_container {
+    overflow: hidden;
+    max-width: 100%;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
