@@ -9,6 +9,7 @@ class TunnelFBO {
     public frameTexture: THREE.WebGLRenderTarget | undefined;
     private texLoader: THREE.TextureLoader;
     private FBOShader: THREE.ShaderMaterial | undefined;
+    private mirror: THREE.Group | undefined
 
     constructor() {
         this.GLTFLoader = new GLTFLoader();
@@ -37,6 +38,8 @@ class TunnelFBO {
             console.log(glb.scene);
             glb.scene.rotateY(-Math.PI / 2);
             glb.scene.traverse((child) => {
+                if (child instanceof THREE.Group)
+                this.mirror = child
                 if (child instanceof THREE.Mesh) {
                     if (child.name === "mirror-fbo") child.material = this.FBOShader;
                     if (child.name === "mirror-struc")

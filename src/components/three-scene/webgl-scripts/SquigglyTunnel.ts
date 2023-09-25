@@ -2,7 +2,7 @@ import * as THREE from "three";
 import layerFrag from "./shaders/layerFrag.glsl"
 import layerVert from "./shaders/layerVert.glsl"
 
-const _LAYERSLENGTH = 30;
+const _LAYERSLENGTH = 15;
 
 
 class SquigglyTunnel {

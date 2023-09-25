@@ -80,6 +80,8 @@ class MainThreeScene {
         }
 
         CamParallax.update()
+        this.scene?.rotateY(0.001)
+
     }
 
     resizeCanvas() {
